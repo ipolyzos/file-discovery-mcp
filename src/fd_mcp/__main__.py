@@ -1,14 +1,12 @@
-"""Console entrypoint; full MCP server wiring is implemented in later changes."""
+"""Stdio MCP entrypoint."""
 
 from __future__ import annotations
 
-import sys
+from fd_mcp.server import create_app
 
 
 def main() -> None:
-    """Placeholder until the stdio MCP server is implemented."""
-    sys.stderr.write("fd-mcp: server not yet implemented; use forthcoming release.\n")
-    sys.exit(2)
+    create_app().run()
 
 
 if __name__ == "__main__":

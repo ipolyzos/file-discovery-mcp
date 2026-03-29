@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-import subprocess
-import sys
-
 import fd_mcp
 
 
@@ -16,12 +13,9 @@ def test_version_matches_pyproject_pattern() -> None:
         assert p.isdigit()
 
 
-def test_main_exits_with_code_2() -> None:
-    proc = subprocess.run(
-        [sys.executable, "-m", "fd_mcp"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    assert proc.returncode == 2
-    assert "not yet implemented" in proc.stderr
+def test_main_and_create_app_are_wired() -> None:
+    from fd_mcp.__main__ import main
+    from fd_mcp.server import create_app
+
+    assert callable(main)
+    assert create_app().name == "fd-mcp"
