@@ -17,8 +17,9 @@ func main() {
 	defer cancel()
 
 	srv := mcpapp.BuildServer()
-	if err := srv.Run(ctx, &mcp.StdioTransport{}); err != nil {
+	err := srv.Run(ctx, &mcp.StdioTransport{})
+	if code := runExitCode(err); code != 0 {
 		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
-		os.Exit(1)
+		os.Exit(code)
 	}
 }
