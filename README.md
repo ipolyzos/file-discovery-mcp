@@ -32,7 +32,7 @@ Clone, build, test, run the stdio server, branching conventions, commit habits, 
 
 ## Contributing
 
-Branch naming, commits, pull requests, code and documentation expectations, and how to report issues: see [**CONTRIBUTING.md**](CONTRIBUTING.md) (full guide: [**docs/contributing.md**](docs/contributing.md)).
+Branch naming, commits, pull requests, code and documentation expectations, and how to report issues: see [**CONTRIBUTING.md**](CONTRIBUTING.md) (full guide: [**docs/contributing.md**](docs/contributing.md)). Community standards: [**CODE_OF_CONDUCT.md**](CODE_OF_CONDUCT.md).
 
 ## Client contract
 
@@ -47,9 +47,9 @@ Threat model (command execution and path exposure), implemented mitigations, saf
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
 - **Shutdown:** **SIGINT** → clean exit status **0** (see `runExitCode` in `cmd/fd-mcp`).
 - **`get_server_info`:** version and flags (no filesystem I/O).
-- **`find_files`:** list files under an allowed directory whose **basename** matches a **glob** (e.g. `*.go`).  
-  - **Backend:** uses **`fd`** on `PATH` when available (`exec.Command`, fixed argv only); otherwise a **`filepath.WalkDir`** implementation. **No** `sh -c`, no user-controlled executables.  
-  - **Limits:** `max_results` is clamped by **`FD_MCP_ABSOLUTE_MAX`** (default cap **50000**). Default per-request ceiling when omitted comes from **`FD_MCP_MAX_RESULTS`** (default **500**).  
+- **`find_files`:** list files under an allowed directory whose **basename** matches a **glob** (e.g. `*.go`).
+  - **Backend:** uses **`fd`** on `PATH` when available (`exec.Command`, fixed argv only); otherwise a **`filepath.WalkDir`** implementation. **No** `sh -c`, no user-controlled executables.
+  - **Limits:** `max_results` is clamped by **`FD_MCP_ABSOLUTE_MAX`** (default cap **50000**). Default per-request ceiling when omitted comes from **`FD_MCP_MAX_RESULTS`** (default **500**).
   - **Optional:** `max_depth` (non-negative) limits directory depth below `root`.
 
 ## Safety constraints
@@ -63,13 +63,13 @@ Threat model (command execution and path exposure), implemented mitigations, saf
 
 ## Current limitations
 
-- Glob is **filename / basename** only (not full-path patterns); semantics follow **`filepath.Match`** for the walk backend and **`fd --glob`** when `fd` is used (minor differences possible).  
-- Symlink-heavy trees may behave subtly vs. a fully canonicalized policy; containment checks use `filepath` semantics as documented in `internal/allowlist`.  
+- Glob is **filename / basename** only (not full-path patterns); semantics follow **`filepath.Match`** for the walk backend and **`fd --glob`** when `fd` is used (minor differences possible).
+- Symlink-heavy trees may behave subtly vs. a fully canonicalized policy; containment checks use `filepath` semantics as documented in `internal/allowlist`.
 - **MCP resource/prompt** surfaces are not implemented.
 
 ## Non-goals (still)
 
-- Write access, arbitrary commands, interactive shell integration.  
+- Write access, arbitrary commands, interactive shell integration.
 - Background indexers or network sync.
 
 ## Build locally
@@ -100,8 +100,8 @@ test -z "$(gofmt -l .)"
 
 ## Development workflow
 
-1. Branch from **`develop`** (`feature/*`, `bugfix/*`, `chore/*`, etc.).  
-2. Run `gofmt`, `go vet`, and `go test ./...` before pushing.  
+1. Branch from **`develop`** (`feature/*`, `bugfix/*`, `chore/*`, etc.).
+2. Run `gofmt`, `go vet`, and `go test ./...` before pushing.
 3. Open a PR into **`develop`**; CI runs build, tests, `gofmt`, and `go vet`.
 
 ## License
@@ -110,8 +110,8 @@ Copyright 2026 Ioannis Polyzos. Licensed under the **Apache License, Version 2.0
 
 ## Roadmap (high level)
 
-1. Tighten symlink / cross-platform edge cases; richer error codes if needed.  
-2. Optional depth-first streaming or paging for huge directories.  
+1. Tighten symlink / cross-platform edge cases; richer error codes if needed.
+2. Optional depth-first streaming or paging for huge directories.
 3. Ongoing releases via `main` with version tags.
 
 Remote: [github.com/ipolyzos/fd-mcp](https://github.com/ipolyzos/fd-mcp).

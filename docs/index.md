@@ -13,6 +13,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | [Architecture](architecture.md) | System shape, packages, and data flow. |
 | [Development](development.md) | Prerequisites, build/test, stdio run, layout, branching, commits, CI. |
 | [Contributing](contributing.md) | Branches, commits, PRs, standards, docs, issue reporting. |
+| [Code of Conduct](../CODE_OF_CONDUCT.md) | Contributor Covenant 2.1; reporting and scope. |
 | [Deploying](deploying.md) | Local run, packaging reality, host integration, CI, early versioning. |
 | [Using](using.md) | Invoking the server, stdio integration, env vars, tools overview. |
 | [Examples](examples.md) | MCP config shape, `find_files` / `get_server_info` JSON samples. |
