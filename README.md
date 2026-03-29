@@ -16,6 +16,8 @@
 
 Step-by-step orientation, example searches (by name, by extension), what to expect in results, and limitations: **[docs/user-guide.md](docs/user-guide.md)**.
 
+**Examples:** call **`find_files`** with `{"pattern": "*.go", "root": "/path/to/repo"}` for all Go files under that directory; add `"max_depth": 2` and `"max_results": 50` to cap depth and list size. Sample MCP configs, success/failure JSON, and edge cases: **[docs/examples.md](docs/examples.md)**.
+
 ## Documentation
 
 Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/index.md**](docs/index.md) for the full map (architecture, development, security, client contract, and more).
