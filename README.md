@@ -6,6 +6,8 @@
 
 **Stack:** Go 1.25+ (see `go.mod`), [modelcontextprotocol/go-sdk](https://github.com/modelcontextprotocol/go-sdk) for MCP.
 
+**Current release:** v0.1.0 — first tagged stdio MCP build (see [CHANGELOG.md](CHANGELOG.md)).
+
 ## Current behavior
 
 - The process speaks MCP over **stdin/stdout** (`fd-mcp` with no arguments).
@@ -52,6 +54,6 @@ Copyright 2026 Ioannis Polyzos. Licensed under the **Apache License, Version 2.0
 
 1. Define safety model (roots, limits, error contract) and MCP tool surface for search.
 2. Implement read-only discovery (prefer `fd` or in-process walk; **never** pass user input to a shell).
-3. Releases via `main` with version tags when the first usable build exists.
+3. Ongoing releases via `main` with version tags (v0.1.0 is the initial tag).
 
 Remote: [github.com/ipolyzos/fd-mcp](https://github.com/ipolyzos/fd-mcp).
