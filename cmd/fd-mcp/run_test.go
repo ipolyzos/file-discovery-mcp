@@ -26,8 +26,11 @@ func TestServerRun_returnsCanceledWhenContextAlreadyCanceled(t *testing.T) {
 	})
 
 	tr := &mcp.IOTransport{Reader: rUp, Writer: wDown}
-	srv := mcpapp.BuildServer()
-	err := srv.Run(ctx, tr)
+	srv, err := mcpapp.BuildServer()
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = srv.Run(ctx, tr)
 	if !errors.Is(err, context.Canceled) {
 		t.Fatalf("Run: got %v; want Canceled", err)
 	}
