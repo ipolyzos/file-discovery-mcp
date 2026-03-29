@@ -20,7 +20,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | [Releases](releases.md) | Versioning, tags, and release process. |
 | [User guide](user-guide.md) | End-user oriented walkthrough (tooling, safety). |
 | [Security](security.md) | Threat model, constraints, and reporting. |
-| [Client contract](client-contract.md) | What MCP clients can rely on (tools, errors, limits). |
+| [Client contract](client-contract.md) | Normative tool I/O, error codes, safety, stability. |
 
 ## Outline
 
