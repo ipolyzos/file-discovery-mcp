@@ -11,7 +11,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | Document | Description |
 |----------|-------------|
 | [Architecture](architecture.md) | System shape, packages, and data flow. |
-| [Development](development.md) | Local setup, build, test, and workflow. |
+| [Development](development.md) | Prerequisites, build/test, stdio run, layout, branching, commits, CI. |
 | [Contributing](contributing.md) | How to propose changes and meet project standards. |
 | [Deploying](deploying.md) | Shipping and running the server in practice. |
 | [Using](using.md) | Day-to-day usage concepts and MCP integration. |

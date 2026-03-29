@@ -16,6 +16,10 @@ Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/ind
 
 fd-mcp is a **stdio MCP server** with a thin MCP layer (`internal/mcpapp`), a **safety layer** (`internal/allowlist`, env limits), and a **read-only discovery layer** (`internal/findfiles`: optional `fd` subprocess with fixed argv, else in-process walk). For the full component model, request/response flow, principles, and non-goals, see [**docs/architecture.md**](docs/architecture.md).
 
+## Development
+
+Clone, build, test, run the stdio server, branching conventions, commit habits, and what **GitHub Actions** runs: see [**docs/development.md**](docs/development.md).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
