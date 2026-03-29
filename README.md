@@ -11,7 +11,7 @@
 ## Current behavior
 
 - The process speaks MCP over **stdin/stdout** (`fd-mcp` with no arguments).
-- Interrupt (**SIGINT**) stops the server cleanly.
+- Interrupt (**SIGINT**) stops the server cleanly with **exit status 0** (only unexpected errors use a non-zero exit).
 - Tool **`get_server_info`**: returns version and capability flags only (**no filesystem access**). Structured JSON includes `read_only: true` and `filesystem_search_wip: true` until search tools exist.
 - **Filesystem search tools** are not implemented yet; the server does not run `fd`, `find`, or a shell.
 
@@ -42,7 +42,7 @@ test -z "$(gofmt -l .)"
 
 ## Development workflow
 
-1. Branch from **`develop`** (`feature/*`, `chore/*`, etc.).
+1. Branch from **`develop`** (`feature/*`, `bugfix/*`, `chore/*`, etc.).
 2. Run `gofmt`, `go vet`, and `go test ./...` before pushing.
 3. Open a PR into **`develop`**; CI runs build, tests, `gofmt`, and `go vet`.
 
