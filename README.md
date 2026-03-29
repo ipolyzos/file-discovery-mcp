@@ -4,7 +4,24 @@ A **stdio** [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) ser
 
 ## Status
 
-Early bootstrap: repository metadata and branching only. Implementation, CI, and releases will land on `develop` via focused PRs.
+Early bootstrap: Python package layout, CI workflow, and placeholder CLI. The stdio MCP server and search tools will land on `develop` via focused PRs.
+
+## Requirements
+
+- Python 3.11 or newer
+- Optional: [`fd`](https://github.com/sharkdp/fd) on `PATH` for faster searches when implemented
+
+## Development
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+pip install -e ".[dev]"
+ruff check src tests
+pytest
+```
+
+Install as a console script after editable install: `fd-mcp` (currently exits with code 2 until the server is wired up).
 
 ## Goals
 
