@@ -68,7 +68,7 @@ If you need a container, build a minimal image that **only** copies a prebuilt `
 
 ## Related documents
 
-- [Releases](releases.md) — placeholder for fuller release policy.
+- [Releases](releases.md) — promoting `develop` to `main`, tags, release notes.
 - [Development](development.md) — local workflow and CI mirror.
 - [Security](security.md) — deployment-facing risks.
 - [Using](using.md) — runtime env and stdio.
