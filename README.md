@@ -12,6 +12,10 @@
 
 Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/index.md**](docs/index.md) for the full map (architecture, development, security, client contract, and more).
 
+## Architecture
+
+fd-mcp is a **stdio MCP server** with a thin MCP layer (`internal/mcpapp`), a **safety layer** (`internal/allowlist`, env limits), and a **read-only discovery layer** (`internal/findfiles`: optional `fd` subprocess with fixed argv, else in-process walk). For the full component model, request/response flow, principles, and non-goals, see [**docs/architecture.md**](docs/architecture.md).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
