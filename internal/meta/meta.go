@@ -3,5 +3,5 @@ package meta
 
 // Version returns the current development version string.
 func Version() string {
-	return "0.2.0"
+	return "0.2.1"
 }
