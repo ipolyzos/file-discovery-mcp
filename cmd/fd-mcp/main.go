@@ -1,14 +1,24 @@
-// Command fd-mcp is the stdio MCP server entrypoint (implementation pending).
+// Command fd-mcp is the fd-mcp stdio MCP server.
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
+	"os/signal"
 
-	"github.com/ipolyzos/fd-mcp/internal/meta"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+
+	"github.com/ipolyzos/fd-mcp/internal/mcpapp"
 )
 
 func main() {
-	fmt.Fprintf(os.Stderr, "fd-mcp %s: server wiring not yet implemented\n", meta.Version())
-	os.Exit(2)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+
+	srv := mcpapp.BuildServer()
+	if err := srv.Run(ctx, &mcp.StdioTransport{}); err != nil {
+		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
+		os.Exit(1)
+	}
 }
