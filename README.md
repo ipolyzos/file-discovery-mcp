@@ -38,6 +38,10 @@ Branch naming, commits, pull requests, code and documentation expectations, and 
 
 Normative MCP tool names, input/output JSON fields, error codes, safety guarantees, and versioning expectations for integrators: see [**docs/client-contract.md**](docs/client-contract.md).
 
+## Security
+
+Threat model (command execution and path exposure), implemented mitigations, safe operational defaults, residual risks, and **responsible disclosure**: [**docs/security.md**](docs/security.md).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
