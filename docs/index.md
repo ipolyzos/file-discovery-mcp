@@ -18,7 +18,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | [Examples](examples.md) | Concrete patterns and sample configurations. |
 | [Troubleshooting](troubleshooting.md) | Common failures and how to narrow them down. |
 | [Releases](releases.md) | Versioning, tags, and release process. |
-| [User guide](user-guide.md) | End-user oriented walkthrough (tooling, safety). |
+| [User guide](user-guide.md) | Quick orientation: when to use fd-mcp, usage patterns, examples, outputs, limits. |
 | [Security](security.md) | Threat model, constraints, and reporting. |
 | [Client contract](client-contract.md) | Normative tool I/O, error codes, safety, stability. |
 
