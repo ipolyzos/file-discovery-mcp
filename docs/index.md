@@ -14,8 +14,8 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | [Development](development.md) | Prerequisites, build/test, stdio run, layout, branching, commits, CI. |
 | [Contributing](contributing.md) | Branches, commits, PRs, standards, docs, issue reporting. |
 | [Deploying](deploying.md) | Shipping and running the server in practice. |
-| [Using](using.md) | Day-to-day usage concepts and MCP integration. |
-| [Examples](examples.md) | Concrete patterns and sample configurations. |
+| [Using](using.md) | Invoking the server, stdio integration, env vars, tools overview. |
+| [Examples](examples.md) | MCP config shape, `find_files` / `get_server_info` JSON samples. |
 | [Troubleshooting](troubleshooting.md) | Common failures and how to narrow them down. |
 | [Releases](releases.md) | Versioning, tags, and release process. |
 | [User guide](user-guide.md) | Quick orientation: when to use fd-mcp, usage patterns, examples, outputs, limits. |
