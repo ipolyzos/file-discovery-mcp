@@ -2,9 +2,16 @@
 
 ## Purpose
 
-**fd-mcp** will be a stdio [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that exposes **read-only**, **scoped** filesystem discovery in the spirit of `fd` / `find`, with structured results and **no arbitrary shell execution**.
+**fd-mcp** is a stdio [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that will expose **read-only**, **scoped** filesystem discovery in the spirit of `fd` / `find`, with structured results and **no arbitrary shell execution**.
 
-The codebase is **Go** (small static binary, strong stdlib, good fit for a stdio MCP server). Toolchain: **Go 1.23+** (see `go.mod`).
+**Stack:** Go 1.25+ (see `go.mod`), [modelcontextprotocol/go-sdk](https://github.com/modelcontextprotocol/go-sdk) for MCP.
+
+## Current behavior
+
+- The process speaks MCP over **stdin/stdout** (`fd-mcp` with no arguments).
+- Interrupt (**SIGINT**) stops the server cleanly.
+- Tool **`get_server_info`**: returns version and capability flags only (**no filesystem access**). Structured JSON includes `read_only: true` and `filesystem_search_wip: true` until search tools exist.
+- **Filesystem search tools** are not implemented yet; the server does not run `fd`, `find`, or a shell.
 
 ## Non-goals (for now)
 
@@ -13,24 +20,21 @@ The codebase is **Go** (small static binary, strong stdlib, good fit for a stdio
 
 ## Build locally
 
-From the repository root:
-
 ```bash
 go build -o fd-mcp ./cmd/fd-mcp
 ```
 
-The binary exits with status `2` until the MCP server is wired up.
+Run (for MCP clients that launch the binary; do not attach a TTY that interferes with stdio):
+
+```bash
+./fd-mcp
+```
 
 ## Test locally
 
 ```bash
 go test ./...
 go vet ./...
-```
-
-Check formatting (same as CI):
-
-```bash
 test -z "$(gofmt -l .)"
 ```
 
@@ -46,8 +50,8 @@ Copyright 2026 Ioannis Polyzos. Licensed under the **Apache License, Version 2.0
 
 ## Roadmap (high level)
 
-1. Define safety model (roots, limits, error contract) and MCP tool surface.
-2. Implement stdio MCP and filesystem discovery with tests.
+1. Define safety model (roots, limits, error contract) and MCP tool surface for search.
+2. Implement read-only discovery (prefer `fd` or in-process walk; **never** pass user input to a shell).
 3. Releases via `main` with version tags when the first usable build exists.
 
 Remote: [github.com/ipolyzos/fd-mcp](https://github.com/ipolyzos/fd-mcp).
