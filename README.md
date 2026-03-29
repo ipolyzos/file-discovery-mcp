@@ -6,7 +6,7 @@
 
 **Stack:** Go 1.25+ (see `go.mod`), [modelcontextprotocol/go-sdk](https://github.com/modelcontextprotocol/go-sdk) for MCP.
 
-**Current release:** v0.1.0 — see [CHANGELOG.md](CHANGELOG.md) (bump when you cut a new tag after this work lands).
+**Current release:** v0.2.0 — see [CHANGELOG.md](CHANGELOG.md).
 
 ## Quick start
 
