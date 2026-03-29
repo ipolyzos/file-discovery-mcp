@@ -8,6 +8,14 @@
 
 **Current release:** v0.1.0 — see [CHANGELOG.md](CHANGELOG.md) (bump when you cut a new tag after this work lands).
 
+## Quick start
+
+1. **Build** the binary: `go build -o fd-mcp ./cmd/fd-mcp` (or use a published release).
+2. **Register** `fd-mcp` in your MCP host as a **stdio** server (command = path to the binary; set **cwd** and optional **`FD_MCP_ROOTS`** if you need specific search boundaries).
+3. **Use** the assistant’s tools **`get_server_info`** and **`find_files`** as exposed by the host.
+
+Step-by-step orientation, example searches (by name, by extension), what to expect in results, and limitations: **[docs/user-guide.md](docs/user-guide.md)**.
+
 ## Documentation
 
 Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/index.md**](docs/index.md) for the full map (architecture, development, security, client contract, and more).
