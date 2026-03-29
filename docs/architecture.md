@@ -85,6 +85,18 @@ End-to-end path for a single tool call:
 
 ---
 
+## Source layout (reference)
+
+| Path | Role |
+|------|------|
+| `cmd/fd-mcp` | Process entry: stdio transport, `BuildServer`, exit status mapping (`runExitCode`). |
+| `internal/mcpapp` | MCP server assembly, tool handlers, `FindFilesOutput` / `ServerInfo`, env-based caps. |
+| `internal/allowlist` | `FD_MCP_ROOTS` parsing, path resolution, containment checks. |
+| `internal/findfiles` | fd subprocess (fixed argv) or `WalkDir` discovery; truncation signaling. |
+| `internal/meta` | Version string for implementation and tools. |
+
+---
+
 ## Related documents
 
 - [Client contract](client-contract.md) — observable tool and error semantics.
