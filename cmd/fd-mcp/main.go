@@ -16,9 +16,14 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	srv := mcpapp.BuildServer()
-	if err := srv.Run(ctx, &mcp.StdioTransport{}); err != nil {
+	srv, err := mcpapp.BuildServer()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
 		os.Exit(1)
+	}
+	err = srv.Run(ctx, &mcp.StdioTransport{})
+	if code := runExitCode(err); code != 0 {
+		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
+		os.Exit(code)
 	}
 }

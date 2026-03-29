@@ -3,7 +3,9 @@ package mcpapp
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/ipolyzos/fd-mcp/internal/allowlist"
 	"github.com/ipolyzos/fd-mcp/internal/meta"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
@@ -13,11 +15,16 @@ type ServerInfo struct {
 	Version             string `json:"version" jsonschema:"Project version string"`
 	Description         string `json:"description" jsonschema:"What this server provides"`
 	ReadOnly            bool   `json:"read_only" jsonschema:"True: no writes or shell execution"`
-	FilesystemSearchWIP bool   `json:"filesystem_search_wip" jsonschema:"True until search tools are implemented"`
+	FilesystemSearchWIP bool   `json:"filesystem_search_wip" jsonschema:"False when find_files is available"`
 }
 
 // BuildServer returns an MCP server with read-only tools registered.
-func BuildServer() *mcp.Server {
+func BuildServer() (*mcp.Server, error) {
+	roots, err := allowlist.LoadRoots()
+	if err != nil {
+		return nil, fmt.Errorf("mcpapp: %w", err)
+	}
+
 	s := mcp.NewServer(&mcp.Implementation{
 		Name:    "fd-mcp",
 		Version: meta.Version(),
@@ -31,9 +38,11 @@ func BuildServer() *mcp.Server {
 			Version:             meta.Version(),
 			Description:         "fd-mcp: read-only filesystem discovery MCP server",
 			ReadOnly:            true,
-			FilesystemSearchWIP: true,
+			FilesystemSearchWIP: false,
 		}, nil
 	})
 
-	return s
+	addFindFilesTool(s, roots)
+
+	return s, nil
 }
