@@ -8,6 +8,10 @@
 
 **Current release:** v0.1.0 — see [CHANGELOG.md](CHANGELOG.md) (bump when you cut a new tag after this work lands).
 
+## Documentation
+
+Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/index.md**](docs/index.md) for the full map (architecture, development, security, client contract, and more).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
