@@ -20,6 +20,10 @@ fd-mcp is a **stdio MCP server** with a thin MCP layer (`internal/mcpapp`), a **
 
 Clone, build, test, run the stdio server, branching conventions, commit habits, and what **GitHub Actions** runs: see [**docs/development.md**](docs/development.md).
 
+## Contributing
+
+Branch naming, commits, pull requests, code and documentation expectations, and how to report issues: see [**CONTRIBUTING.md**](CONTRIBUTING.md) (full guide: [**docs/contributing.md**](docs/contributing.md)).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).

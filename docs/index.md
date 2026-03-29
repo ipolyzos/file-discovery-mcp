@@ -12,7 +12,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 |----------|-------------|
 | [Architecture](architecture.md) | System shape, packages, and data flow. |
 | [Development](development.md) | Prerequisites, build/test, stdio run, layout, branching, commits, CI. |
-| [Contributing](contributing.md) | How to propose changes and meet project standards. |
+| [Contributing](contributing.md) | Branches, commits, PRs, standards, docs, issue reporting. |
 | [Deploying](deploying.md) | Shipping and running the server in practice. |
 | [Using](using.md) | Day-to-day usage concepts and MCP integration. |
 | [Examples](examples.md) | Concrete patterns and sample configurations. |
