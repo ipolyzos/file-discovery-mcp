@@ -1,3 +1,11 @@
+# Go (root-level binary from `go build -o fd-mcp`)
+/fd-mcp
+/bin/
+*.exe
+*.test
+profile.cov
+coverage.out
+
 # Byte-compiled / cache
 __pycache__/
 *.py[cod]
