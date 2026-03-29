@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.2.1] - 2026-03-30
+
+### Added
+
+- [Contributor Covenant 2.1](CODE_OF_CONDUCT.md) with reporting via GitHub issues; security issues cross-linked to [docs/security.md](docs/security.md). Linked from README, CONTRIBUTING, and docs index.
+
+[0.2.1]: https://github.com/ipolyzos/fd-mcp/releases/tag/v0.2.1
+
 ## [0.2.0] - 2026-03-29
 
 ### Added

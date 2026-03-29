@@ -2,6 +2,8 @@
 
 Thank you for taking the time to improve fd-mcp. This document describes how we work together: branching, commits, pull requests, code expectations, documentation, and reporting issues.
 
+Participation is governed by the repository [**Code of Conduct**](../CODE_OF_CONDUCT.md).
+
 For day-to-day setup and CI details, see [development.md](development.md). For system design and safety boundaries, see [architecture.md](architecture.md) and [security.md](security.md).
 
 ---
@@ -129,6 +131,7 @@ Describe the **problem** and **constraints** (read-only, stdio MCP, etc.). Large
 
 ## Related documents
 
+- [Code of Conduct](../CODE_OF_CONDUCT.md) — community standards and enforcement
 - [Development](development.md) — local build, test, CI matrix, running the server
 - [Architecture](architecture.md) — layers and data flow
 - [Security](security.md) — reporting and trust model
