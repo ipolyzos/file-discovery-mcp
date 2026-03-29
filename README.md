@@ -24,6 +24,10 @@ Clone, build, test, run the stdio server, branching conventions, commit habits, 
 
 Branch naming, commits, pull requests, code and documentation expectations, and how to report issues: see [**CONTRIBUTING.md**](CONTRIBUTING.md) (full guide: [**docs/contributing.md**](docs/contributing.md)).
 
+## Client contract
+
+Normative MCP tool names, input/output JSON fields, error codes, safety guarantees, and versioning expectations for integrators: see [**docs/client-contract.md**](docs/client-contract.md).
+
 ## Implemented functionality
 
 - **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
