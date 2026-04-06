@@ -11,17 +11,17 @@ Illustrative shape: **command** (absolute path recommended), optional **environm
 ```json
 {
   "mcpServers": {
-    "fd-mcp": {
-      "command": "/home/alice/bin/fd-mcp",
+    "file-discovery-mcp": {
+      "command": "/home/alice/bin/file-discovery-mcp",
       "env": {
-        "FD_MCP_ROOTS": "/home/alice/work/myproject:/home/alice/oss/contrib"
+        "FILE_DISCOVERY_MCP_ROOTS": "/home/alice/work/myproject:/home/alice/oss/contrib"
       }
     }
   }
 }
 ```
 
-- If **`FD_MCP_ROOTS`** is omitted, only the server’s **startup cwd** is allowed (set cwd in the host when you can).
+- If **`FILE_DISCOVERY_MCP_ROOTS`** is omitted, only the server’s **startup cwd** is allowed (set cwd in the host when you can).
 - Replace paths and top-level key (`mcpServers` vs `servers`) with whatever your editor or runtime expects.
 
 ---
@@ -45,7 +45,7 @@ Find all Go files under a repository root (basename glob only).
 {
   "ok": true,
   "matches": [
-    "/home/alice/work/myproject/cmd/fd-mcp/main.go",
+    "/home/alice/work/myproject/cmd/file-discovery-mcp/main.go",
     "/home/alice/work/myproject/internal/findfiles/findfiles.go"
   ],
   "truncated": false,
@@ -150,8 +150,8 @@ Exact **`error`** text may differ slightly; clients should branch on **`code`**,
 
 ```json
 {
-  "version": "0.2.1",
-  "description": "fd-mcp: read-only filesystem discovery MCP server",
+  "version": "0.3.0",
+  "description": "file-discovery-mcp: read-only filesystem discovery MCP server",
   "read_only": true,
   "filesystem_search_wip": false
 }

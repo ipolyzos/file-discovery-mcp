@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
+	"github.com/ipolyzos/file-discovery-mcp/internal/allowlist"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -22,7 +24,7 @@ func TestGetServerInfoReturnsVersionAndReadOnly(t *testing.T) {
 		t.Fatalf("server connect: %v", err)
 	}
 
-	client := mcp.NewClient(&mcp.Implementation{Name: "fd-mcp-test", Version: "0"}, nil)
+	client := mcp.NewClient(&mcp.Implementation{Name: "file-discovery-mcp-test", Version: "0"}, nil)
 	cs, err := client.Connect(ctx, t2, nil)
 	if err != nil {
 		t.Fatalf("client connect: %v", err)
@@ -58,6 +60,9 @@ func TestGetServerInfoReturnsVersionAndReadOnly(t *testing.T) {
 	if info.FilesystemSearchWIP {
 		t.Fatal("expected FilesystemSearchWIP false when find_files exists")
 	}
+	if !strings.Contains(info.Description, "file-discovery-mcp") {
+		t.Fatalf("Description %q should mention file-discovery-mcp", info.Description)
+	}
 }
 
 func TestFindFilesTool_findsInAllowedRoot(t *testing.T) {
@@ -65,7 +70,7 @@ func TestFindFilesTool_findsInAllowedRoot(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(root, "x.go"), []byte("p"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	t.Setenv("FD_MCP_ROOTS", root)
+	t.Setenv(allowlist.EnvRoots, root)
 	t.Setenv("PATH", t.TempDir()) // force walk backend for stability in CI
 
 	srv, err := BuildServer()
@@ -77,7 +82,7 @@ func TestFindFilesTool_findsInAllowedRoot(t *testing.T) {
 	if _, err := srv.Connect(ctx, t1, nil); err != nil {
 		t.Fatal(err)
 	}
-	client := mcp.NewClient(&mcp.Implementation{Name: "fd-mcp-test", Version: "0"}, nil)
+	client := mcp.NewClient(&mcp.Implementation{Name: "file-discovery-mcp-test", Version: "0"}, nil)
 	cs, err := client.Connect(ctx, t2, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -113,7 +118,7 @@ func TestFindFilesTool_findsInAllowedRoot(t *testing.T) {
 func TestFindFilesTool_rejectsPathOutsideRoots(t *testing.T) {
 	allowed := t.TempDir()
 	outside := t.TempDir()
-	t.Setenv("FD_MCP_ROOTS", allowed)
+	t.Setenv(allowlist.EnvRoots, allowed)
 
 	srv, err := BuildServer()
 	if err != nil {
@@ -124,7 +129,7 @@ func TestFindFilesTool_rejectsPathOutsideRoots(t *testing.T) {
 	if _, err := srv.Connect(ctx, t1, nil); err != nil {
 		t.Fatal(err)
 	}
-	client := mcp.NewClient(&mcp.Implementation{Name: "fd-mcp-test", Version: "0"}, nil)
+	client := mcp.NewClient(&mcp.Implementation{Name: "file-discovery-mcp-test", Version: "0"}, nil)
 	cs, err := client.Connect(ctx, t2, nil)
 	if err != nil {
 		t.Fatal(err)

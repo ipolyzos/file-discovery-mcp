@@ -1,12 +1,12 @@
 # Architecture
 
-**Purpose:** Describe how fd-mcp is structured: layers, data flow, principles, and how new capability should plug in without breaking safety.
+**Purpose:** Describe how file-discovery-mcp is structured: layers, data flow, principles, and how new capability should plug in without breaking safety.
 
 ---
 
 ## Overview
 
-fd-mcp is a **stdio MCP server**: a long-lived process that speaks the [Model Context Protocol](https://modelcontextprotocol.io/) over **stdin/stdout** (newline-delimited JSON/RPC). The binary entrypoint is `cmd/fd-mcp`; it builds an MCP `Server` from `internal/mcpapp`, runs it on `mcp.StdioTransport`, and maps process exit status so normal **SIGINT** shutdown is **exit 0** (`cmd/fd-mcp` exit policy).
+file-discovery-mcp is a **stdio MCP server**: a long-lived process that speaks the [Model Context Protocol](https://modelcontextprotocol.io/) over **stdin/stdout** (newline-delimited JSON/RPC). The binary entrypoint is `cmd/file-discovery-mcp`; it builds an MCP `Server` from `internal/mcpapp`, runs it on `mcp.StdioTransport`, and maps process exit status so normal **SIGINT** shutdown is **exit 0** (`cmd/file-discovery-mcp` exit policy).
 
 The product surface today is **tools only** (no resources/prompts): metadata (`get_server_info`) and **read-only** path search (`find_files`). All filesystem work is **scoped**, **bounded**, and implemented **without a shell**.
 
@@ -29,7 +29,7 @@ The product surface today is **tools only** (no resources/prompts): metadata (`g
 ### Safety layer (scoping and limits)
 
 - **Role:** Prevent searches outside operator-chosen roots and cap blast radius (result size).
-- **Location:** `internal/allowlist` loads **`FD_MCP_ROOTS`** (path-list like `PATH`), resolves the caller’s `root`, and enforces **containment** relative to configured roots. `internal/mcpapp/limits.go` clamps **`max_results`** using **`FD_MCP_MAX_RESULTS`** and **`FD_MCP_ABSOLUTE_MAX`**.
+- **Location:** `internal/allowlist` loads **`FILE_DISCOVERY_MCP_ROOTS`** (path-list like `PATH`), resolves the caller’s `root`, and enforces **containment** relative to configured roots. `internal/mcpapp/limits.go` clamps **`max_results`** using **`FILE_DISCOVERY_MCP_MAX_RESULTS`** and **`FILE_DISCOVERY_MCP_ABSOLUTE_MAX`**.
 - **Behavior:** Denials are explicit (`PATH_NOT_ALLOWED`, invalid pattern/root/depth) and returned as structured tool output rather than crashing the server.
 
 ### Response formatting layer
@@ -46,7 +46,7 @@ End-to-end path for a single tool call:
 
 1. **Request** — Client sends `tools/call` with JSON args (`pattern`, `root`, optional `max_results`, `max_depth`).
 2. **Validation** — SDK validates against tool schema; handler trims strings, rejects empty pattern/root, rejects negative `max_depth`.
-3. **Scoping** — Resolve `root` to an absolute path; **`MustBeUnderRoots`** ensures it lies under **`FD_MCP_ROOTS`** (or the process cwd default).
+3. **Scoping** — Resolve `root` to an absolute path; **`MustBeUnderRoots`** ensures it lies under **`FILE_DISCOVERY_MCP_ROOTS`** (or the process cwd default).
 4. **Limits** — `clampMaxResults` applies environment defaults and absolute ceiling.
 5. **Execution** — `findfiles.Run` invokes **fd** or **walk** under the validated root; context cancellation propagates to the `fd` child process.
 6. **Transformation** — Paths collected; `truncated` set when the cap may have hidden further matches (`fd` line count vs cap; walk stops with `fs.SkipAll`).
@@ -58,7 +58,7 @@ End-to-end path for a single tool call:
 
 ## Design principles
 
-| Principle | Meaning for fd-mcp |
+| Principle | Meaning for file-discovery-mcp |
 |-----------|---------------------|
 | **Read-only** | No tool creates, mutates, or deletes files; no write side-effects on the tree beyond OS read access for directory traversal. |
 | **Deterministic policy** | Given the same roots, env caps, and inputs, behavior is predictable: containment and clamps are code-defined, not host-shell aliases. |
@@ -89,9 +89,9 @@ End-to-end path for a single tool call:
 
 | Path | Role |
 |------|------|
-| `cmd/fd-mcp` | Process entry: stdio transport, `BuildServer`, exit status mapping (`runExitCode`). |
+| `cmd/file-discovery-mcp` | Process entry: stdio transport, `BuildServer`, exit status mapping (`runExitCode`). |
 | `internal/mcpapp` | MCP server assembly, tool handlers, `FindFilesOutput` / `ServerInfo`, env-based caps. |
-| `internal/allowlist` | `FD_MCP_ROOTS` parsing, path resolution, containment checks. |
+| `internal/allowlist` | `FILE_DISCOVERY_MCP_ROOTS` parsing, path resolution, containment checks. |
 | `internal/findfiles` | fd subprocess (fixed argv) or `WalkDir` discovery; truncation signaling. |
 | `internal/meta` | Version string for implementation and tools. |
 

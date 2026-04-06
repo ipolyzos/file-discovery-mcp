@@ -1,4 +1,4 @@
-module github.com/ipolyzos/fd-mcp
+module github.com/ipolyzos/file-discovery-mcp
 
 go 1.25.0
 

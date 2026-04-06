@@ -69,7 +69,7 @@ Tags are **immutable**: if a tag is wrong, prefer a new patch (**`v0.2.1`**) rat
 2. **Choose tag:** `vX.Y.Z` (create from target `main` if not pushed yet—prefer tagging locally then pushing as above).
 3. **Title:** typically **`vX.Y.Z`**.
 4. **Description:** paste or summarize the **`[x.y.z]`** section from **CHANGELOG.md**; add install pointers ([deploying](deploying.md)) or security notes ([security](security.md)) if the release warrants it.
-5. **Assets** — optional: attach cross-built **`fd-mcp`** binaries. The repository CI **does not** build or upload them automatically today; add artifacts manually or via a separate pipeline if needed.
+5. **Assets** — optional: attach cross-built **`file-discovery-mcp`** binaries. The repository CI **does not** build or upload them automatically today; add artifacts manually or via a separate pipeline if needed.
 
 ---
 

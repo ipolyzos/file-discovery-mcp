@@ -1,6 +1,6 @@
 # Development
 
-**Purpose:** Clone fd-mcp, build and test locally, run the stdio server safely, and match what GitHub Actions enforces—so your PR is review-ready on the first push.
+**Purpose:** Clone file-discovery-mcp, build and test locally, run the stdio server safely, and match what GitHub Actions enforces—so your PR is review-ready on the first push.
 
 ---
 
@@ -19,8 +19,8 @@ No Docker or Node is required for core development.
 From your workspace:
 
 ```bash
-git clone https://github.com/ipolyzos/fd-mcp.git
-cd fd-mcp
+git clone https://github.com/ipolyzos/file-discovery-mcp.git
+cd file-discovery-mcp
 go env GOPATH   # optional sanity check
 go mod download
 ```
@@ -34,13 +34,13 @@ There is no `make` target yet; everything goes through the **`go`** tool.
 From the repository root:
 
 ```bash
-go build -o fd-mcp ./cmd/fd-mcp
+go build -o file-discovery-mcp ./cmd/file-discovery-mcp
 ```
 
 Install into `$GOBIN` or `$GOPATH/bin` if you prefer:
 
 ```bash
-go install ./cmd/fd-mcp
+go install ./cmd/file-discovery-mcp
 ```
 
 ---
@@ -75,17 +75,17 @@ The server speaks MCP on **stdin/stdout**. Do **not** rely on an interactive TTY
 **Smoke run (will idle until stdin closes or SIGINT):**
 
 ```bash
-go run ./cmd/fd-mcp
+go run ./cmd/file-discovery-mcp
 ```
 
 **With a built binary and scoped roots (example, Unix):**
 
 ```bash
-FD_MCP_ROOTS="$PWD" ./fd-mcp
+FILE_DISCOVERY_MCP_ROOTS="$PWD" ./file-discovery-mcp
 ```
 
-- **SIGINT** — Clean shutdown exits **0** (see `cmd/fd-mcp` exit mapping).
-- To exercise tools end-to-end, use an **MCP client** or inspector that launches the binary as a subprocess with pipes—not `fd-mcp` in a raw shell session for protocol debugging unless you know the client owns stdio.
+- **SIGINT** — Clean shutdown exits **0** (see `cmd/file-discovery-mcp` exit mapping).
+- To exercise tools end-to-end, use an **MCP client** or inspector that launches the binary as a subprocess with pipes—not `file-discovery-mcp` in a raw shell session for protocol debugging unless you know the client owns stdio.
 
 ---
 
@@ -93,9 +93,9 @@ FD_MCP_ROOTS="$PWD" ./fd-mcp
 
 | Path | Role |
 |------|------|
-| `cmd/fd-mcp` | `main`, stdio `Run`, SIGINT-aware exit codes. |
+| `cmd/file-discovery-mcp` | `main`, stdio `Run`, SIGINT-aware exit codes. |
 | `internal/mcpapp` | MCP server, tools (`get_server_info`, `find_files`), limits. |
-| `internal/allowlist` | `FD_MCP_ROOTS` and path containment. |
+| `internal/allowlist` | `FILE_DISCOVERY_MCP_ROOTS` and path containment. |
 | `internal/findfiles` | `fd` subprocess (fixed argv) or `WalkDir` search. |
 | `internal/meta` | Version string. |
 | `docs/` | Long-form documentation. |

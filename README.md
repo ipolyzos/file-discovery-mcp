@@ -1,17 +1,17 @@
-# fd-mcp
+# file-discovery-mcp
 
 ## Purpose
 
-**fd-mcp** is a stdio [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server for **read-only**, **scoped** filesystem discovery (similar to `fd` / `find`), with structured JSON and **no shell**.
+**file-discovery-mcp** is a stdio [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server for **read-only**, **scoped** filesystem discovery (similar to `fd` / `find`), with structured JSON and **no shell**.
 
 **Stack:** Go 1.25+ (see `go.mod`), [modelcontextprotocol/go-sdk](https://github.com/modelcontextprotocol/go-sdk) for MCP.
 
-**Current release:** v0.2.1 — see [CHANGELOG.md](CHANGELOG.md).
+**Current release:** v0.3.0 — see [CHANGELOG.md](CHANGELOG.md).
 
 ## Quick start
 
-1. **Build** the binary: `go build -o fd-mcp ./cmd/fd-mcp` (or use a published release).
-2. **Register** `fd-mcp` in your MCP host as a **stdio** server (command = path to the binary; set **cwd** and optional **`FD_MCP_ROOTS`** if you need specific search boundaries).
+1. **Build** the binary: `go build -o file-discovery-mcp ./cmd/file-discovery-mcp` (or use a published release).
+2. **Register** `file-discovery-mcp` in your MCP host as a **stdio** server (command = path to the binary; set **cwd** and optional **`FILE_DISCOVERY_MCP_ROOTS`** if you need specific search boundaries).
 3. **Use** the assistant’s tools **`get_server_info`** and **`find_files`** as exposed by the host.
 
 Step-by-step orientation, example searches (by name, by extension), what to expect in results, and limitations: **[docs/user-guide.md](docs/user-guide.md)**.
@@ -24,7 +24,7 @@ Extended guides and outlines live under [**docs/**](docs/). Start at [**docs/ind
 
 ## Architecture
 
-fd-mcp is a **stdio MCP server** with a thin MCP layer (`internal/mcpapp`), a **safety layer** (`internal/allowlist`, env limits), and a **read-only discovery layer** (`internal/findfiles`: optional `fd` subprocess with fixed argv, else in-process walk). For the full component model, request/response flow, principles, and non-goals, see [**docs/architecture.md**](docs/architecture.md).
+file-discovery-mcp is a **stdio MCP server** with a thin MCP layer (`internal/mcpapp`), a **safety layer** (`internal/allowlist`, env limits), and a **read-only discovery layer** (`internal/findfiles`: optional `fd` subprocess with fixed argv, else in-process walk). For the full component model, request/response flow, principles, and non-goals, see [**docs/architecture.md**](docs/architecture.md).
 
 ## Development
 
@@ -44,19 +44,19 @@ Threat model (command execution and path exposure), implemented mitigations, saf
 
 ## Implemented functionality
 
-- **Transport:** MCP over **stdin/stdout** (`fd-mcp` with no arguments).
-- **Shutdown:** **SIGINT** → clean exit status **0** (see `runExitCode` in `cmd/fd-mcp`).
+- **Transport:** MCP over **stdin/stdout** (`file-discovery-mcp` with no arguments).
+- **Shutdown:** **SIGINT** → clean exit status **0** (see `runExitCode` in `cmd/file-discovery-mcp`).
 - **`get_server_info`:** version and flags (no filesystem I/O).
 - **`find_files`:** list files under an allowed directory whose **basename** matches a **glob** (e.g. `*.go`).
   - **Backend:** uses **`fd`** on `PATH` when available (`exec.Command`, fixed argv only); otherwise a **`filepath.WalkDir`** implementation. **No** `sh -c`, no user-controlled executables.
-  - **Limits:** `max_results` is clamped by **`FD_MCP_ABSOLUTE_MAX`** (default cap **50000**). Default per-request ceiling when omitted comes from **`FD_MCP_MAX_RESULTS`** (default **500**).
+  - **Limits:** `max_results` is clamped by **`FILE_DISCOVERY_MCP_ABSOLUTE_MAX`** (default cap **50000**). Default per-request ceiling when omitted comes from **`FILE_DISCOVERY_MCP_MAX_RESULTS`** (default **500**).
   - **Optional:** `max_depth` (non-negative) limits directory depth below `root`.
 
 ## Safety constraints
 
 | Mechanism | Behavior |
 |-----------|----------|
-| **Root allowlist** | Env **`FD_MCP_ROOTS`**: list of directories (OS path-list separator, same as `PATH`). If unset, **current working directory** at process start is the only root. Every `find_files` **`root`** must resolve inside one of these directories (after `filepath.Clean` / abs); otherwise **`PATH_NOT_ALLOWED`**. |
+| **Root allowlist** | Env **`FILE_DISCOVERY_MCP_ROOTS`**: list of directories (OS path-list separator, same as `PATH`). If unset, **current working directory** at process start is the only root. Every `find_files` **`root`** must resolve inside one of these directories (after `filepath.Clean` / abs); otherwise **`PATH_NOT_ALLOWED`**. |
 | **Read-only** | Tools do not create, modify, or delete files. |
 | **No arbitrary execution** | `fd` is invoked with a fixed argument shape; patterns are **not** passed through a shell. |
 | **Bounded output** | Results are capped by **`max_results`** (after clamping). **`truncated: true`** when the cap may have cut off further matches. |
@@ -75,19 +75,19 @@ Threat model (command execution and path exposure), implemented mitigations, saf
 ## Build locally
 
 ```bash
-go build -o fd-mcp ./cmd/fd-mcp
+go build -o file-discovery-mcp ./cmd/file-discovery-mcp
 ```
 
 Run (typical MCP client configuration: command = built binary, optional env):
 
 ```bash
-./fd-mcp
+./file-discovery-mcp
 ```
 
 Example **restrict roots** (Unix):
 
 ```bash
-FD_MCP_ROOTS=/safe/project:/tmp/readonly ./fd-mcp
+FILE_DISCOVERY_MCP_ROOTS=/safe/project:/tmp/readonly ./file-discovery-mcp
 ```
 
 ## Test locally
@@ -114,4 +114,4 @@ Copyright 2026 Ioannis Polyzos. Licensed under the **Apache License, Version 2.0
 2. Optional depth-first streaming or paging for huge directories.
 3. Ongoing releases via `main` with version tags.
 
-Remote: [github.com/ipolyzos/fd-mcp](https://github.com/ipolyzos/fd-mcp).
+Remote: [github.com/ipolyzos/file-discovery-mcp](https://github.com/ipolyzos/file-discovery-mcp).

@@ -1,12 +1,12 @@
 # User guide
 
-**Audience:** People who run **fd-mcp** alongside an MCP-capable application (IDE, assistant, or custom client) and want to search the filesystem **safely** and **read-only**. This guide is narrative and practical. For exact tool JSON and error codes, use the [client contract](client-contract.md).
+**Audience:** People who run **file-discovery-mcp** alongside an MCP-capable application (IDE, assistant, or custom client) and want to search the filesystem **safely** and **read-only**. This guide is narrative and practical. For exact tool JSON and error codes, use the [client contract](client-contract.md).
 
 ---
 
-## What fd-mcp is
+## What file-discovery-mcp is
 
-**fd-mcp** is a small program that speaks the [Model Context Protocol](https://modelcontextprotocol.io/) over **standard input and output** (stdio). It exposes tools your client can call so an assistant can **list files** under directories you allow—using filename patterns similar to shell globs—without running a shell or modifying disk.
+**file-discovery-mcp** is a small program that speaks the [Model Context Protocol](https://modelcontextprotocol.io/) over **standard input and output** (stdio). It exposes tools your client can call so an assistant can **list files** under directories you allow—using filename patterns similar to shell globs—without running a shell or modifying disk.
 
 Under the hood it may use the **[`fd`](https://github.com/sharkdp/fd)** CLI when installed, or fall back to a built-in directory walk. You do not type `fd` yourself; the server invokes it with fixed arguments only.
 
@@ -14,7 +14,7 @@ Under the hood it may use the **[`fd`](https://github.com/sharkdp/fd)** CLI when
 
 ## When to use it
 
-Use fd-mcp when you want:
+Use file-discovery-mcp when you want:
 
 - **Scoped search:** Only paths under roots you configure (or under the server’s starting directory by default).
 - **Structured answers:** File paths returned as data the model can reason about, not raw terminal text.
@@ -28,9 +28,9 @@ Avoid relying on it for **full-path** matching, **content** search inside files,
 
 ### Running the server
 
-The MCP client starts fd-mcp as a **child process** and connects stdin/stdout to the protocol. Typical pattern:
+The MCP client starts file-discovery-mcp as a **child process** and connects stdin/stdout to the protocol. Typical pattern:
 
-1. Install or build the `fd-mcp` binary (see the repository [README](../README.md) under **Build locally**).
+1. Install or build the `file-discovery-mcp` binary (see the repository [README](../README.md) under **Build locally**).
 2. In your client’s MCP settings, set the **command** to that binary (and optional **environment variables**).
 3. Set the process **working directory** if your client allows it—it affects how **relative** `root` paths in `find_files` are resolved.
 
@@ -38,9 +38,9 @@ The MCP client starts fd-mcp as a **child process** and connects stdin/stdout to
 
 | Variable | Effect |
 |----------|--------|
-| **`FD_MCP_ROOTS`** | List of directories (same separator style as your OS `PATH`) that searches may use as boundaries. If **unset**, only the directory the server was started in counts as an allowed root. |
-| **`FD_MCP_MAX_RESULTS`** | Default cap on how many paths one `find_files` call returns when the client does not pass `max_results` (server default **500** if unset). |
-| **`FD_MCP_ABSOLUTE_MAX`** | Hard ceiling the server applies even if the client asks for more (default **50000**). |
+| **`FILE_DISCOVERY_MCP_ROOTS`** | List of directories (same separator style as your OS `PATH`) that searches may use as boundaries. If **unset**, only the directory the server was started in counts as an allowed root. |
+| **`FILE_DISCOVERY_MCP_MAX_RESULTS`** | Default cap on how many paths one `find_files` call returns when the client does not pass `max_results` (server default **500** if unset). |
+| **`FILE_DISCOVERY_MCP_ABSOLUTE_MAX`** | Hard ceiling the server applies even if the client asks for more (default **50000**). |
 
 ### Tools you will see
 
@@ -80,7 +80,7 @@ Use a single glob on the **basename**. Patterns like `**/*.go` are not “path-a
 Optional fields:
 
 - **`max_depth`** — Non-negative integer; omit or leave unset for unlimited depth below `root`.
-- **`max_results`** — Positive integer; omit to use the default from `FD_MCP_MAX_RESULTS` (still subject to the absolute cap).
+- **`max_results`** — Positive integer; omit to use the default from `FILE_DISCOVERY_MCP_MAX_RESULTS` (still subject to the absolute cap).
 
 ---
 
@@ -107,7 +107,7 @@ Failures use the same structured shape with **`ok: false`**, a short **`code`** 
 
 - **Basename glob only:** Patterns apply to the file **name**, not the whole path. You narrow location by choosing `root`, not by embedding `/` in the pattern.
 - **Read-only:** No create, overwrite, or delete.
-- **Roots are fixed at startup:** Allowlist comes from **`FD_MCP_ROOTS`** (or the initial working directory) when the process starts; changing env vars later requires restarting the server if your client cached the process.
+- **Roots are fixed at startup:** Allowlist comes from **`FILE_DISCOVERY_MCP_ROOTS`** (or the initial working directory) when the process starts; changing env vars later requires restarting the server if your client cached the process.
 - **Two backends:** With **`fd`** vs **`walk`**, edge cases (symlinks, exact glob edge cases) can differ slightly.
 - **No file contents:** Search is by **path/name** only, not inside file bodies.
 - **No MCP resources/prompts:** Only tools are implemented today.

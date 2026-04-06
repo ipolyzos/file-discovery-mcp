@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/ipolyzos/fd-mcp/internal/mcpapp"
+	"github.com/ipolyzos/file-discovery-mcp/internal/mcpapp"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 

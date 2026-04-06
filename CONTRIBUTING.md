@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your interest in fd-mcp.
+Thank you for your interest in file-discovery-mcp.
 
 This project follows the [**Code of Conduct**](CODE_OF_CONDUCT.md). By participating, you agree to uphold it.
 

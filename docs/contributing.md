@@ -1,6 +1,6 @@
-# Contributing to fd-mcp
+# Contributing to file-discovery-mcp
 
-Thank you for taking the time to improve fd-mcp. This document describes how we work together: branching, commits, pull requests, code expectations, documentation, and reporting issues.
+Thank you for taking the time to improve file-discovery-mcp. This document describes how we work together: branching, commits, pull requests, code expectations, documentation, and reporting issues.
 
 Participation is governed by the repository [**Code of Conduct**](../CODE_OF_CONDUCT.md).
 
@@ -90,10 +90,10 @@ Target branch for routine work is **`develop`**. Releases are promoted to **`mai
 
 ### Safety constraints
 
-fd-mcp is a **read-only** server with **scoped** filesystem access. Contributions must preserve:
+file-discovery-mcp is a **read-only** server with **scoped** filesystem access. Contributions must preserve:
 
 - **No arbitrary shell** — user input must not be interpolated into shell commands; use fixed argv, `exec` with explicit fields, or pure Go I/O as today’s code does.
-- **Path scoping** — new tools that touch the filesystem should respect **`FD_MCP_ROOTS`** (or extend `allowlist` in a documented, reviewable way).
+- **Path scoping** — new tools that touch the filesystem should respect **`FILE_DISCOVERY_MCP_ROOTS`** (or extend `allowlist` in a documented, reviewable way).
 - **Bounded work** — respect **timeouts**, **context cancellation**, and **result limits** where applicable.
 
 If you are unsure whether a change weakens these guarantees, **ask in the PR** early.
@@ -116,7 +116,7 @@ Include where possible:
 
 - **Version** (git tag or commit) and **Go version**
 - **Steps to reproduce** and **expected vs actual** behavior
-- **Environment** (OS, relevant env vars such as `FD_MCP_ROOTS`)
+- **Environment** (OS, relevant env vars such as `FILE_DISCOVERY_MCP_ROOTS`)
 - **Minimal** logs or snippets (no secrets)
 
 ### Security issues

@@ -1,12 +1,12 @@
-// Package mcpapp configures the fd-mcp Model Context Protocol server (tools only; stdio in cmd).
+// Package mcpapp configures the file-discovery-mcp Model Context Protocol server (tools only; stdio in cmd).
 package mcpapp
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/ipolyzos/fd-mcp/internal/allowlist"
-	"github.com/ipolyzos/fd-mcp/internal/meta"
+	"github.com/ipolyzos/file-discovery-mcp/internal/allowlist"
+	"github.com/ipolyzos/file-discovery-mcp/internal/meta"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -26,17 +26,17 @@ func BuildServer() (*mcp.Server, error) {
 	}
 
 	s := mcp.NewServer(&mcp.Implementation{
-		Name:    "fd-mcp",
+		Name:    "file-discovery-mcp",
 		Version: meta.Version(),
 	}, nil)
 
 	mcp.AddTool(s, &mcp.Tool{
 		Name:        "get_server_info",
-		Description: "Return fd-mcp version and capability flags. Does not access the filesystem.",
+		Description: "Return file-discovery-mcp version and capability flags. Does not access the filesystem.",
 	}, func(_ context.Context, _ *mcp.CallToolRequest, _ struct{}) (*mcp.CallToolResult, ServerInfo, error) {
 		return nil, ServerInfo{
 			Version:             meta.Version(),
-			Description:         "fd-mcp: read-only filesystem discovery MCP server",
+			Description:         "file-discovery-mcp: read-only filesystem discovery MCP server",
 			ReadOnly:            true,
 			FilesystemSearchWIP: false,
 		}, nil
