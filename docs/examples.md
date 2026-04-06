@@ -150,7 +150,7 @@ Exact **`error`** text may differ slightly; clients should branch on **`code`**,
 
 ```json
 {
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "file-discovery-mcp: read-only filesystem discovery MCP server",
   "read_only": true,
   "filesystem_search_wip": false

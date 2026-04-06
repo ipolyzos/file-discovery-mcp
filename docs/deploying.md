@@ -59,7 +59,7 @@ If you need a container, build a minimal image that **only** copies a prebuilt `
 
 ## Versioning approach (early)
 
-- **User-visible string:** `get_server_info` / MCP `Implementation.version` come from **`internal/meta.Version()`** (currently **0.2.1**). It **must** be updated when cutting a release that changes behavior users rely on.
+- **User-visible string:** `get_server_info` / MCP `Implementation.version` come from **`internal/meta.Version()`** (currently **0.3.0**). It **must** be updated when cutting a release that changes behavior users rely on.
 - **Tags:** Prefer **`v0.x.y`** Git tags aligned with that string and [CHANGELOG.md](../CHANGELOG.md) entries.
 - **Branches:** Day-to-day merges target **`develop`**; **`main`** is the release line when maintainers promote—see [development.md](development.md). Early **0.x** releases may include compatible additions without strict semver API promises beyond the [client contract](client-contract.md).
 - **No migration tooling:** Upgrades are “replace binary, restart host,” with contract docs as the compatibility reference.
