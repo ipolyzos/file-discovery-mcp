@@ -1,4 +1,4 @@
-// Command fd-mcp is the fd-mcp stdio MCP server.
+// Command file-discovery-mcp is the file-discovery-mcp stdio MCP server.
 package main
 
 import (
@@ -9,7 +9,7 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
-	"github.com/ipolyzos/fd-mcp/internal/mcpapp"
+	"github.com/ipolyzos/file-discovery-mcp/internal/mcpapp"
 )
 
 func main() {
@@ -18,12 +18,12 @@ func main() {
 
 	srv, err := mcpapp.BuildServer()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
+		fmt.Fprintf(os.Stderr, "file-discovery-mcp: %v\n", err)
 		os.Exit(1)
 	}
 	err = srv.Run(ctx, &mcp.StdioTransport{})
 	if code := runExitCode(err); code != 0 {
-		fmt.Fprintf(os.Stderr, "fd-mcp: %v\n", err)
+		fmt.Fprintf(os.Stderr, "file-discovery-mcp: %v\n", err)
 		os.Exit(code)
 	}
 }

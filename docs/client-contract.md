@@ -1,6 +1,6 @@
-# MCP client contract (fd-mcp)
+# MCP client contract (file-discovery-mcp)
 
-**Purpose:** Normative expectations for MCP clients integrating with **fd-mcp**. This document specifies transport, tool names, JSON field semantics, error classification, safety guarantees, and versioning—not usage tutorials.
+**Purpose:** Normative expectations for MCP clients integrating with **file-discovery-mcp**. This document specifies transport, tool names, JSON field semantics, error classification, safety guarantees, and versioning—not usage tutorials.
 
 Conformance keywords are used in their usual sense: **must** (requirement), **should** (recommendation), **may** (optional).
 
@@ -10,7 +10,7 @@ Conformance keywords are used in their usual sense: **must** (requirement), **sh
 
 - **Transport:** **stdio** only (newline-delimited JSON-RPC over process **stdin** / **stdout**). Clients **must** own both streams; they **must not** assume a TTY for protocol I/O.
 - **Process exit:** On **SIGINT** (or parent cancellation of the server context), the process **should** exit with status **0** after shutting down. Non-zero exit **may** indicate startup or runtime failure before or outside normal tool handling (see **System errors**).
-- **Implementation identity:** The server advertises MCP `Implementation` with `name` **`fd-mcp`** and `version` equal to the string returned by tool output field **`version`** in **`get_server_info`** (same source as `internal/meta.Version` at build time).
+- **Implementation identity:** The server advertises MCP `Implementation` with `name` **`file-discovery-mcp`** and `version` equal to the string returned by tool output field **`version`** in **`get_server_info`** (same source as `internal/meta.Version` at build time).
 
 ---
 
@@ -53,8 +53,8 @@ Conformance keywords are used in their usual sense: **must** (requirement), **sh
 | Field | Type | Required | Validation |
 |-------|------|----------|------------|
 | `pattern` | string | yes | After trim of ASCII whitespace, **must not** be empty. Semantics: **basename glob** (e.g. `*.go`), not a full path pattern. Interpretation matches **`fd --glob`** when backend is `fd`, else **`filepath.Match`** on the file’s base name (minor differences between backends are possible). |
-| `root` | string | yes | After trim, **must not** be empty. Interpreted as a directory path: if relative, resolved against the server process **current working directory** at call time, then cleaned and made absolute. **Must** fall under at least one entry of **`FD_MCP_ROOTS`** (see **Safety**). |
-| `max_results` | integer | no | If **omitted or ≤ 0**, effective limit is **`FD_MCP_MAX_RESULTS`** env default (**500** if unset/invalid), then clamped. If **> 0**, used as requested limit then **clamped** so the effective value **does not exceed** **`FD_MCP_ABSOLUTE_MAX`** (default **50000** if unset/invalid env). Final effective limit **must** be ≥ **1**. |
+| `root` | string | yes | After trim, **must not** be empty. Interpreted as a directory path: if relative, resolved against the server process **current working directory** at call time, then cleaned and made absolute. **Must** fall under at least one entry of **`FILE_DISCOVERY_MCP_ROOTS`** (see **Safety**). |
+| `max_results` | integer | no | If **omitted or ≤ 0**, effective limit is **`FILE_DISCOVERY_MCP_MAX_RESULTS`** env default (**500** if unset/invalid), then clamped. If **> 0**, used as requested limit then **clamped** so the effective value **does not exceed** **`FILE_DISCOVERY_MCP_ABSOLUTE_MAX`** (default **50000** if unset/invalid env). Final effective limit **must** be ≥ **1**. |
 | `max_depth` | integer \| null | no | If present, **must** be **≥ 0**. Omitted or null means **unlimited** depth under `root`. |
 
 Invalid combinations **must** yield a **logical tool failure** (`ok: false`, see below)—not necessarily an MCP protocol error.
@@ -98,7 +98,7 @@ Errors fall into three classes:
 
 ### 2. Execution errors (policy or I/O during search)
 
-- **`PATH_NOT_ALLOWED`:** Resolved `root` is not contained in any configured allowlist root (`FD_MCP_ROOTS` semantics).
+- **`PATH_NOT_ALLOWED`:** Resolved `root` is not contained in any configured allowlist root (`FILE_DISCOVERY_MCP_ROOTS` semantics).
 - **`SEARCH_FAILED`:** Search backend failed (e.g. `fd` non-zero exit, I/O error during walk). `error` **should** carry a short diagnostic string; clients **must not** assume a stable token format inside `error`.
 
 These **must** use `ok: false` and the corresponding `code`.
@@ -113,10 +113,10 @@ These **must** use `ok: false` and the corresponding `code`.
 
 ## Safety guarantees (client-observable)
 
-Clients **may** rely on the following for the current **fd-mcp** implementation:
+Clients **may** rely on the following for the current **file-discovery-mcp** implementation:
 
 1. **Read-only:** `find_files` does not create, modify, or delete files or directories.
-2. **Path restriction:** Every successful `find_files` search uses a `root` verified against **`FD_MCP_ROOTS`** (path-list separator as for `PATH`); if unset at server start, only the process initial working directory is allowed (**implementation detail:** loaded once at `BuildServer`; document in ops guides).
+2. **Path restriction:** Every successful `find_files` search uses a `root` verified against **`FILE_DISCOVERY_MCP_ROOTS`** (path-list separator as for `PATH`); if unset at server start, only the process initial working directory is allowed (**implementation detail:** loaded once at `BuildServer`; document in ops guides).
 3. **Bounded results:** The number of paths in `matches` **must not** exceed the effective **`max_results`** returned in the success object.
 4. **No shell:** User-supplied `pattern` and `root` are **not** passed to `/bin/sh` or equivalent; `fd` is invoked with a fixed argv template.
 

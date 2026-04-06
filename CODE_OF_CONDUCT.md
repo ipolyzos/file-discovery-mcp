@@ -36,7 +36,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at **[https://github.com/ipolyzos/fd-mcp/issues](https://github.com/ipolyzos/fd-mcp/issues)** when a public report is appropriate. For sensitive matters, use GitHub’s options to contact maintainers privately, or a [private security advisory](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) when relevant. **Unfixed security vulnerabilities** should **not** be filed as public issues—follow [docs/security.md](docs/security.md).
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at **[https://github.com/ipolyzos/file-discovery-mcp/issues](https://github.com/ipolyzos/file-discovery-mcp/issues)** when a public report is appropriate. For sensitive matters, use GitHub’s options to contact maintainers privately, or a [private security advisory](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) when relevant. **Unfixed security vulnerabilities** should **not** be filed as public issues—follow [docs/security.md](docs/security.md).
 
 All complaints will be reviewed and investigated promptly and fairly.
 

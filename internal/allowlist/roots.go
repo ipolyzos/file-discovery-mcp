@@ -1,4 +1,4 @@
-// Package allowlist enforces search roots from FD_MCP_ROOTS and path containment.
+// Package allowlist enforces search roots from FILE_DISCOVERY_MCP_ROOTS and path containment.
 package allowlist
 
 import (
@@ -8,12 +8,13 @@ import (
 	"strings"
 )
 
-const envRoots = "FD_MCP_ROOTS"
+// EnvRoots is the environment variable holding the OS path-list of allowed search roots.
+const EnvRoots = "FILE_DISCOVERY_MCP_ROOTS"
 
 // LoadRoots returns absolute directory roots allowed for search.
-// If FD_MCP_ROOTS is empty, the current working directory is the only root.
+// If EnvRoots is unset or empty, the current working directory is the only root.
 func LoadRoots() ([]string, error) {
-	raw := strings.TrimSpace(os.Getenv(envRoots))
+	raw := strings.TrimSpace(os.Getenv(EnvRoots))
 	if raw == "" {
 		wd, err := os.Getwd()
 		if err != nil {

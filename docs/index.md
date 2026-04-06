@@ -1,4 +1,4 @@
-# fd-mcp documentation
+# file-discovery-mcp documentation
 
 This site is the entry point for deeper documentation beyond the repository [README](../README.md).
 
@@ -19,7 +19,7 @@ Orient contributors and operators, and reserve space for guides that will grow w
 | [Examples](examples.md) | MCP config shape, `find_files` / `get_server_info` JSON samples. |
 | [Troubleshooting](troubleshooting.md) | fd vs walk, permissions, empty results, performance, debugging, logging. |
 | [Releases](releases.md) | develop→main promotion, gates, tags, changelog, GitHub Releases. |
-| [User guide](user-guide.md) | Quick orientation: when to use fd-mcp, usage patterns, examples, outputs, limits. |
+| [User guide](user-guide.md) | Quick orientation: when to use file-discovery-mcp, usage patterns, examples, outputs, limits. |
 | [Security](security.md) | Threat model, mitigations, defaults, disclosure. |
 | [Client contract](client-contract.md) | Normative tool I/O, error codes, safety, stability. |
 
