@@ -76,7 +76,7 @@ func TestLoadRoots_fromEnvSplitList(t *testing.T) {
 		t.Fatal(err)
 	}
 	sep := string(os.PathListSeparator)
-	t.Setenv(envRoots, aa+sep+bb)
+	t.Setenv("FILE_DISCOVERY_MCP_ROOTS", aa+sep+bb)
 	roots, err := LoadRoots()
 	if err != nil {
 		t.Fatal(err)
