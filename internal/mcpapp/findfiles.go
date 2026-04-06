@@ -12,8 +12,8 @@ import (
 // FindFilesInput is the JSON input for the find_files tool.
 type FindFilesInput struct {
 	Pattern    string `json:"pattern" jsonschema:"Filename glob (e.g. *.go). Passed to fd --glob or filepath.Match."`
-	Root       string `json:"root" jsonschema:"Directory to search; must fall under FD_MCP_ROOTS (default: process working directory)."`
-	MaxResults int    `json:"max_results,omitempty" jsonschema:"Max paths to return; capped by FD_MCP_ABSOLUTE_MAX. 0 uses FD_MCP_MAX_RESULTS default."`
+	Root       string `json:"root" jsonschema:"Directory to search; must fall under FILE_DISCOVERY_MCP_ROOTS (default: process working directory)."`
+	MaxResults int    `json:"max_results,omitempty" jsonschema:"Max paths to return; capped by FILE_DISCOVERY_MCP_ABSOLUTE_MAX. 0 uses FILE_DISCOVERY_MCP_MAX_RESULTS default."`
 	MaxDepth   *int   `json:"max_depth,omitempty" jsonschema:"Max directory depth under root. Omitted means unlimited."`
 }
 

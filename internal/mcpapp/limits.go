@@ -9,16 +9,18 @@ import (
 const (
 	defaultMaxResults     = 500
 	absoluteMaxResultsCap = 50000
+	envMaxResults         = "FILE_DISCOVERY_MCP_MAX_RESULTS"
+	envAbsoluteMax        = "FILE_DISCOVERY_MCP_ABSOLUTE_MAX"
 )
 
 func clampMaxResults(requested int) int {
 	if requested <= 0 {
-		requested = envIntDefault("FD_MCP_MAX_RESULTS", defaultMaxResults)
+		requested = envIntDefault(envMaxResults, defaultMaxResults)
 	}
 	if requested < 1 {
 		requested = 1
 	}
-	capLimit := envIntDefault("FD_MCP_ABSOLUTE_MAX", absoluteMaxResultsCap)
+	capLimit := envIntDefault(envAbsoluteMax, absoluteMaxResultsCap)
 	if capLimit < 1 {
 		capLimit = absoluteMaxResultsCap
 	}
