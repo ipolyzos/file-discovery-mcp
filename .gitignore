@@ -1,5 +1,5 @@
-# Go (root-level binary from `go build -o fd-mcp`)
-/fd-mcp
+# Go (root-level binary from `go build -o file-discovery-mcp`)
+/file-discovery-mcp
 /bin/
 *.exe
 *.test

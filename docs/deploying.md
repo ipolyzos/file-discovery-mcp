@@ -1,14 +1,14 @@
 # Deploying
 
-**Purpose:** How to **run**, **ship**, and **pin** fd-mcp for real use given the **current** repository—single Go binary, no first-party container or package recipes yet.
+**Purpose:** How to **run**, **ship**, and **pin** file-discovery-mcp for real use given the **current** repository—single Go binary, no first-party container or package recipes yet.
 
 ---
 
 ## Running locally
 
-- **Build:** From repo root, `go build -o fd-mcp ./cmd/fd-mcp` or `go install ./cmd/fd-mcp` (needs Go **1.25+** per `go.mod`).
-- **Invoke:** `./fd-mcp` with **no arguments**; protocol on **stdin/stdout**. Set **`FD_MCP_ROOTS`**, **`cwd`**, and **`PATH`** (for optional `fd`) in the MCP host config, not by hand in production shells unless you control stdio end-to-end.
-- **Smoke check:** `go run ./cmd/fd-mcp` blocks until stdin closes or **SIGINT**; use an MCP client to exercise tools.
+- **Build:** From repo root, `go build -o file-discovery-mcp ./cmd/file-discovery-mcp` or `go install ./cmd/file-discovery-mcp` (needs Go **1.25+** per `go.mod`).
+- **Invoke:** `./file-discovery-mcp` with **no arguments**; protocol on **stdin/stdout**. Set **`FILE_DISCOVERY_MCP_ROOTS`**, **`cwd`**, and **`PATH`** (for optional `fd`) in the MCP host config, not by hand in production shells unless you control stdio end-to-end.
+- **Smoke check:** `go run ./cmd/file-discovery-mcp` blocks until stdin closes or **SIGINT**; use an MCP client to exercise tools.
 
 Details: [development.md](development.md) (build/test), [using.md](using.md) (stdio, env).
 
@@ -21,7 +21,7 @@ Details: [development.md](development.md) (build/test), [using.md](using.md) (st
 | Approach | Notes |
 |----------|--------|
 | **Local `go build` / `go install`** | Default; produces one static-ish binary (depends on Go build mode and cgo). |
-| **Cross-compile** | e.g. `GOOS=linux GOARCH=amd64 go build -o fd-mcp ./cmd/fd-mcp` from any supported host. |
+| **Cross-compile** | e.g. `GOOS=linux GOARCH=amd64 go build -o file-discovery-mcp ./cmd/file-discovery-mcp` from any supported host. |
 | **Git tag checkout** | Build from a **tagged** commit for reproducibility; see **Versioning**. |
 
 **What does not exist in-repo yet**
@@ -29,15 +29,15 @@ Details: [development.md](development.md) (build/test), [using.md](using.md) (st
 - No **Dockerfile**, **Helm chart**, **deb/rpm**, or **GoReleaser** config.
 - **Releases:** GitHub **Releases** may ship tag + artifact manually; operators can mirror the same `go build` steps in their own pipeline.
 
-If you need a container, build a minimal image that **only** copies a prebuilt `fd-mcp` and sets `USER`/non-root as required by your policy; keep **stdin/stdout** as the MCP attach point the orchestrator expects.
+If you need a container, build a minimal image that **only** copies a prebuilt `file-discovery-mcp` and sets `USER`/non-root as required by your policy; keep **stdin/stdout** as the MCP attach point the orchestrator expects.
 
 ---
 
 ## Integration into environments
 
-- **MCP hosts (Cursor, Claude Desktop, custom):** Register **command** = absolute path to `fd-mcp`, optional **env** (`FD_MCP_ROOTS`, `FD_MCP_MAX_RESULTS`, `PATH`), optional **working directory**. Shape varies by product—see [examples.md](examples.md).
-- **Process model:** The host **spawns** the binary; there is **no** long-lived listen port in stock `fd-mcp`. “Supervision” is the host’s job (restart on crash, stderr capture).
-- **Hardening:** Tight **`FD_MCP_ROOTS`**, non-privileged user, stable **`PATH`** if you rely on `fd`. See [security.md](security.md).
+- **MCP hosts (Cursor, Claude Desktop, custom):** Register **command** = absolute path to `file-discovery-mcp`, optional **env** (`FILE_DISCOVERY_MCP_ROOTS`, `FILE_DISCOVERY_MCP_MAX_RESULTS`, `PATH`), optional **working directory**. Shape varies by product—see [examples.md](examples.md).
+- **Process model:** The host **spawns** the binary; there is **no** long-lived listen port in stock `file-discovery-mcp`. “Supervision” is the host’s job (restart on crash, stderr capture).
+- **Hardening:** Tight **`FILE_DISCOVERY_MCP_ROOTS`**, non-privileged user, stable **`PATH`** if you rely on `fd`. See [security.md](security.md).
 
 ---
 
