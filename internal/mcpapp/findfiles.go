@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/ipolyzos/fd-mcp/internal/allowlist"
-	"github.com/ipolyzos/fd-mcp/internal/findfiles"
+	"github.com/ipolyzos/file-discovery-mcp/internal/allowlist"
+	"github.com/ipolyzos/file-discovery-mcp/internal/findfiles"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 

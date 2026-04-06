@@ -5,8 +5,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ipolyzos/fd-mcp/internal/allowlist"
-	"github.com/ipolyzos/fd-mcp/internal/meta"
+	"github.com/ipolyzos/file-discovery-mcp/internal/allowlist"
+	"github.com/ipolyzos/file-discovery-mcp/internal/meta"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 

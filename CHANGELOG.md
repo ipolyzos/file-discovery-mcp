@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- **Breaking:** Renamed the Go module to `github.com/ipolyzos/file-discovery-mcp` and the CLI entrypoint to `cmd/file-discovery-mcp` (binary name **`file-discovery-mcp`**).
+- **Breaking:** Environment variables **`FD_MCP_*`** are replaced with **`FILE_DISCOVERY_MCP_*`** (`ROOTS`, `MAX_RESULTS`, `ABSOLUTE_MAX`).
+- MCP server `Implementation.name` and user-facing descriptions now use **`file-discovery-mcp`**; stderr messages are prefixed with **`file-discovery-mcp:`**.
+
 ## [0.2.1] - 2026-03-30
 
 ### Added

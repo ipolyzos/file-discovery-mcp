@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ipolyzos/fd-mcp/internal/allowlist"
+	"github.com/ipolyzos/file-discovery-mcp/internal/allowlist"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
